@@ -18,7 +18,7 @@ int CTree::delItm ()
 }
 */
 
-int CTree::addItm (ElemType data)
+int CTree::addItm (struct item* prefItm, ElemType data)
 {
     if (!treeRoot_)
     {
@@ -26,15 +26,43 @@ int CTree::addItm (ElemType data)
 
         treeRoot_->data = data;
 
-        return Nomistake;
+        return NOMISTAKE;
     }
     
-    struct item* newItem = findItm (data);
-    newItem->data = data;
+    if ((prefItm->left) && (prefItm->right))
+    {
+        printf ("This item filled\n");
+
+        return MISTAKE;
+    }
+
+    struct item* newItm = new item;
+    
+    newItm->data = data;
+ 
+    if (Compare_ (data, prefItm->data) == LEFT)
+        prefItm->left = newItm;
+
+    else if (Compare_ (data, prefItm->data) == RIGHT)
+        prefItm->right = newItm;
+
+    else
+        return MISTAKE;
 
     return NOMISTAKE;
 }
 
+int CTree::Compare_ (ElemType data, ElemType object)
+{
+    if (data > object)
+        return RIGHT;
+    else if (data <= object)
+        return LEFT;
+
+    return NOCOMP;
+}
+
+/*
 struct item* CTree::findItm (ElemType data)
 {
     struct item* item = treeRoot_; 
@@ -45,4 +73,4 @@ struct item* CTree::findItm (ElemType data)
             return item;
         //compare
     }
-}
+}*/
