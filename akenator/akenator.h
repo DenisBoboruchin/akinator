@@ -5,6 +5,7 @@
 #include <assert.h>
 
 #include "../tree/tree.h"
-#include "../graphviz/graphviz.h"
+
+int CtorTreeListing (FILE* file, struct item* root, int* count = nullptr);
 
 #endif
