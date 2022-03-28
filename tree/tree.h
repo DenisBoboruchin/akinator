@@ -2,6 +2,7 @@
 #define TREE
 
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 #include "../graphviz/graphviz.h"
@@ -21,10 +22,13 @@ enum comp
     NOCOMP
 };
 
-typedef int ElemType;
-                                                             
-const int           DESTROYED   =      -1232;
+//-------------------------------------------------------------------------
+//--------------------------TYPE_OF_THE_TREE-------------------------------
+//-------------------------------------------------------------------------
 
+#define STR
+//typedef const char* ElemType;
+                                                            
 struct item
 {
 	ElemType		data	    =	       0;

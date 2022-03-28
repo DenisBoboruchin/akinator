@@ -1,5 +1,26 @@
 #include "tree.h"
 
+#ifdef STR
+    typedef const char* ElemType;
+
+    const char*     INITIAL     =     "fict";
+    const char*     DESTROYED   =     "dest";
+#endif
+
+#ifdef INT
+    typedef int ElemType;
+
+    const int       INITIAL     =     111111;
+    const int       DESTROYED   =      -4942;
+#endif
+
+#ifdef DOUBLE
+    typedef double ElemType;
+
+    double          INITIAL     =     111111;
+    double          DESTROYED   =      -7234;
+#endif
+
 CTree::CTree () :
     treeRoot_ (nullptr),
     size_ (0) 
@@ -21,7 +42,7 @@ void CTree::TreeDtor_ (struct item* node)
         TreeDtor_ (node->right);
 
     node->data = DESTROYED;
-    delete node;
+    delete[] node;
 }
 
 int CTree::addItm (struct item* prefItm, ElemType data)
@@ -66,12 +87,27 @@ int CTree::addItm (struct item* prefItm, ElemType data)
 
 int Compare (ElemType data, ElemType object)
 {
-    if (data > object)
-        return RIGHT;
-    else if (data < object)
-        return LEFT;
-    else if (data == object)
-        return EQUAL;
+    #ifndef STR
+        if (data > object)
+            return RIGHT;
+        
+        else if (data < object)
+            return LEFT;
+        
+        else if (data == object)
+            return EQUAL;
+    #endif
+
+    #ifdef STR
+        if (!strcmp (data, object))
+            return EQUAL;
+            
+        else if (strlen (data) > strlen (object))
+            return RIGHT;
+        
+        else if (strlen (data) <= strlen (object))
+            return LEFT;
+    #endif
 
     return NOCOMP;
 }

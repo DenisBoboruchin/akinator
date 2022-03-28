@@ -7,15 +7,13 @@ int main ()
     printf ("started\n");
 
     CTree t1;
-/*
-    t1.addItm (nullptr, 2);
 
-    t1.addItm (t1.findItm (2), 3);
-    t1.addItm (t1.findItm (2), 1);
-    t1.addItm (t1.findItm (1), 0);
-    t1.addItm (t1.findItm (1), 2);
-    t1.addItm (t1.findItm (3), 2);
-*/
+    t1.addItm (nullptr, "root");
+
+    t1.addItm (t1.findItm ("root"), "l1");
+    t1.addItm (t1.findItm ("root"), "llll2");
+    t1.addItm (t1.findItm ("l1"), "l");
+
     t1.graphDump ();
 
     return 0;
