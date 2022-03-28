@@ -6,14 +6,14 @@ CFLAGS = -c -Wall -Wextra -Werror -Walloc-zero -Walloca -Walloca-larger-than=819
             -Wsuggest-final-types -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code -Wunused -Wvariadic-macros      \
             -Wno-missing-field-initializers -Wnarrowing -Wvarargs -fcheck-new -fstrict-overflow -flto-odr-type-merging 	
 
-all: main.o okenator.o graphviz.o
-	g++ okenator/okenator.cpp graphviz/graphviz.cpp main.cpp -o main
+all: main.o akenator.o graphviz.o
+	g++ akenator/akenator.cpp graphviz/graphviz.cpp main.cpp -o main
 
 main.o: main.cpp
 	g++ $(CFLAGS) main.cpp
 
-okenator.o: okenator/okenator.cpp
-	g++ $(CFLAGS) okenator/okenator.cpp
+akenator.o: akenator/akenator.cpp
+	g++ $(CFLAGS) akenator/akenator.cpp
 
 graphviz.o: graphviz/graphviz.cpp
 	g++ $(CFLAGS) graphviz/graphviz.cpp
