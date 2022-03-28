@@ -40,10 +40,11 @@ private:
     int             size_       =          0;
 
     int             TreeOk_     ();
+    void            TreeDtor_   (struct item* node);
 
 public:
     explicit        CTree       ();
-    //                ~CTree      ();
+                    ~CTree      ();
 
     int             addItm      (struct item* prefItm, ElemType data);
     struct item*    findItm     (ElemType data);

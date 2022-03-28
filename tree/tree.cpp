@@ -4,19 +4,25 @@ CTree::CTree () :
     treeRoot_ (nullptr),
     size_ (0) 
     {}
-/*
+
 CTree::~CTree ()
 {
-    
+    TreeDtor_ (treeRoot_);
 }
 
-int CTree::delItm ()
+void CTree::TreeDtor_ (struct item* node)
 {
-    
+    if (node == nullptr)
+        return ;
 
-    retrn NOMISTAKE;
+    if (node->left)
+        TreeDtor_ (node->left);
+    if (node->right)
+        TreeDtor_ (node->right);
+
+    node->data = DESTROYED;
+    delete node;
 }
-*/
 
 int CTree::addItm (struct item* prefItm, ElemType data)
 {
@@ -70,54 +76,6 @@ int Compare (ElemType data, ElemType object)
     return NOCOMP;
 }
 
-int CTree::graphDump ()
-{
-    DotCtor ("TB", "darkkhaki");
-
-    CtorElemsForDot (treeRoot_);
-
-    CtorEdgeForDot (treeRoot_);
-
-    DotEnd ();
-
-    return NOMISTAKE;
-}
-
-int CtorElemsForDot (struct item* node)
-{
-    assert (node != nullptr);
-
-    DotElemCtor (node, node->data, node->left, node->right);
-
-    if (node->left)
-        CtorElemsForDot (node->left);
-    if (node->right)
-        CtorElemsForDot (node->right);
-
-    return NOMISTAKE;
-}
-
-int CtorEdgeForDot (struct item* node)
-{
-    assert (node != nullptr);
-
-    if (node->left)
-    {
-        DotLeftEdgeCtor (node, node->left);
-
-        CtorEdgeForDot (node->left);
-    }
-    
-    if (node->right)
-    {
-        DotRightEdgeCtor (node, node->right);
-
-        CtorEdgeForDot (node->right);
-    }
-
-    return NOMISTAKE;
-}
-
 struct item* CTree::findItm (ElemType data)
 {
     struct item* item = treeRoot_; 
@@ -145,3 +103,72 @@ struct item* CTree::findItm (ElemType data)
 
     return nullptr;
 }
+
+int CTree::TreeOk_ ()
+{
+    
+
+    return NOMISTAKE;
+}
+
+int CTree::graphDump ()
+{
+    DotCtor ("TB", "darkkhaki");
+
+    CtorElemsForDot (treeRoot_);
+
+    CtorEdgeForDot (treeRoot_);
+
+    DotEnd ();
+
+    return NOMISTAKE;
+}
+
+int CtorElemsForDot (struct item* node)
+{
+    if (!node)  
+    {
+        printf ("Tree is empty\n");
+        return NOMISTAKE;
+    }  
+
+    DotElemCtor (node, node->data, node->left, node->right);
+
+    if (node->left)
+        CtorElemsForDot (node->left);
+    if (node->right)
+        CtorElemsForDot (node->right);
+
+    return NOMISTAKE;
+}
+
+int CtorEdgeForDot (struct item* node)
+{
+    if (!node)  
+        return NOMISTAKE;  
+
+    if (node->left)
+    {
+        DotLeftEdgeCtor (node, node->left);
+
+        CtorEdgeForDot (node->left);
+    }
+    
+    if (node->right)
+    {
+        DotRightEdgeCtor (node, node->right);
+
+        CtorEdgeForDot (node->right);
+    }
+
+    return NOMISTAKE;
+}
+
+
+
+/*
+int CTree::delItm (struct item* node)
+{
+   
+}
+*/
