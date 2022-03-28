@@ -1,5 +1,5 @@
-#ifndef OKENATOR
-#define OKENATOR
+#ifndef AKINATOR
+#define AKINATOR
 
 #include <stdio.h>
 #include <assert.h>

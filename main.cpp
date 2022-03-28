@@ -10,7 +10,7 @@ int main ()
 
     t1.addItm (nullptr, "Животное?");
 
-    t1.addItm (t1.findItm ("Животное?"), "кот");
+    t1.addItm (t1.findItm ("Животное?"), "кот               ");
     t1.addItm (t1.findItm ("Животное?"), "Фачит?");
     t1.addItm (t1.findItm ("Фачит?"), "Млад?");
 
