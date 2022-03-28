@@ -13,27 +13,35 @@ void DotCtor (const char* rankdir, const char* color)
     fprintf (dotFile, "\tnode[color=%s, fontsize = 8];\n", color);
 }
 
-void DotElemCtor (int index, int data, int next, int prev, const char* shape, 
+void DotElemCtor (void* index, ElemType data, void* next, void* prev, const char* shape, 
         const char* color, const char* label, const char* style)
 {
-    fprintf (dotFile, "\t%s%d[shape=%s, ", label, index, shape); 
-    fprintf (dotFile, "label=\"addres\\n%4d|<data> data\\n%4d|{<next>next:%4d|<prev>prev:%4d}\", ", 
-            index, data, next, prev);
+    fprintf (dotFile, "\t%s%p[shape=%s, ", label, index, shape); 
+    fprintf (dotFile, "label=\"{<adress> addres\\n%p|<data> data\\n", index);
+    fprintf (dotFile, ELEM_FMT, data);
+    
+    fprintf (dotFile, "|{<left>left:%10p|<right>right:%10p}}\", ", next, prev);
     fprintf (dotFile, "fillcolor=\"%s\", style=%s];\n", color, style);
 }
-
+/*
 void DotInfoElemCtor (int capacity, int size, int head, int tail, int free, int statLin, 
         const char* shape, const char* color, const char* style)
 {
     fprintf (dotFile, "\t%s[shape=%s, ", "info", shape); 
-    fprintf (dotFile, "label=\"Lists info|capacity:%4d|size:%4d|head:%4d|tail:%4d|free:%4d|statLin:%4d\", ", 
+    fprintf (dotFile, "label=\"Lists info|size:%4d|firstElem:\"",  
         capacity, size, head, tail, free, statLin);
     fprintf (dotFile, "fillcolor=\"%s\", style=%s];\n", color, style);
+}*/
+
+void DotLeftEdgeCtor (void* index1, void* index2, const char* style, const char* color)
+{
+    fprintf (dotFile, "\telem%p:<left>-> elem%p[style=%s, color=\"%s\"];\n", 
+            index1, index2, style, color);
 }
 
-void DotEdgeCtor (int index1, int index2, const char* style, const char* color)
+void DotRightEdgeCtor (void* index1, void* index2, const char* style, const char* color)
 {
-    fprintf (dotFile, "\telem%d-> elem%d[style=%s, color=\"%s\"];\n", 
+    fprintf (dotFile, "\telem%p:<right>-> elem%p[style=%s, color=\"%s\"];\n", 
             index1, index2, style, color);
 }
 
@@ -51,6 +59,6 @@ void DotEnd (void)
 
     fclose (dotFile);
 
-    system ("dot dump/dot.dot  -q -Tpng -o dump/dump.png");
+    system ("dot dump/dot.dot -Tpng -q -o dump/dump.png");
     system ("rm  dump/dot.dot");
 }

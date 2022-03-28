@@ -13,9 +13,13 @@ const int           MISTAKE     =          1;
                                             
 const int           NOTFOUND    =       -583;
 
-const int           LEFT        =       3523;
-const int           RIGHT       =       4923;
-const int           NOCOMP      =       -296;
+enum comp
+{
+    LEFT    =       3523,
+    RIGHT               ,
+    EQUAL               ,
+    NOCOMP
+};
 
 typedef int ElemType;
                                                              
@@ -36,7 +40,6 @@ private:
     int             size_       =          0;
 
     int             TreeOk_     ();
-    int             Compare_    (ElemType data, ElemType object);
 
 public:
     explicit        CTree       ();
@@ -44,6 +47,13 @@ public:
 
     int             addItm      (struct item* prefItm, ElemType data);
     struct item*    findItm     (ElemType data);
+
+    int             graphDump   ();
 };
+
+int CtorElemsForDot (struct item* node);
+int CtorEdgeForDot  (struct item* node);
+
+int Compare         (ElemType data, ElemType object);
 
 #endif
