@@ -11,7 +11,8 @@ const int           DESTROYSZ   =     -12323;
 
 const int           NOMISTAKE   =          0;
 const int           MISTAKE     =          1;
-                                            
+                                
+const int           EMPTY       =       9234;
 const int           NOTFOUND    =       -583;
 
 enum comp
@@ -44,6 +45,7 @@ private:
     int             size_       =          0;
 
     int             TreeOk_     ();
+    int             CheckEmpty_ (struct item* prefItm);
     void            TreeDtor_   (struct item* node);
 
 public:

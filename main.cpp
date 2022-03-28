@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "akenator/akenator.h"
+#include "akinator/akinator.h"
 
 int main ()
 {

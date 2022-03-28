@@ -47,15 +47,13 @@ void CTree::TreeDtor_ (struct item* node)
 
 int CTree::addItm (struct item* prefItm, ElemType data)
 {
-    if (!treeRoot_)
+    if (CheckEmpty_ (prefItm) == EMPTY)         //check tree on empty
     {
-        treeRoot_ = new item;
-
         treeRoot_->data = data;
 
         return NOMISTAKE;
     }
-    
+                
     if ((prefItm->left) && (prefItm->right))
     {
         printf ("This item filled\n");
@@ -82,6 +80,27 @@ int CTree::addItm (struct item* prefItm, ElemType data)
             return MISTAKE;
     }
     
+    return NOMISTAKE;
+}
+
+int CTree::CheckEmpty_ (struct item* prefItm)
+{
+    if (!prefItm)
+    {
+        if (!treeRoot_)
+        {
+            treeRoot_ = new item;        
+
+            return EMPTY;
+        }
+
+        else
+        {
+            printf ("ERROR!!! Tree is not empty\n");
+            assert (prefItm);
+        }
+    }
+
     return NOMISTAKE;
 }
 
@@ -136,6 +155,9 @@ struct item* CTree::findItm (ElemType data)
                 break;
         }
     }
+
+    printf (ELEM_FMT, data);
+    printf (" not found\n");
 
     return nullptr;
 }
