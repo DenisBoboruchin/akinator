@@ -6,8 +6,8 @@ CFLAGS = -c -Wall -Wextra -Werror -Walloc-zero -Walloca -Walloca-larger-than=819
             -Wsuggest-final-types -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code -Wunused -Wvariadic-macros      \
             -Wno-missing-field-initializers -Wnarrowing -Wvarargs -fcheck-new -fstrict-overflow -flto-odr-type-merging 	
 
-all: main.o akinator.o tree.o graphviz.o
-	g++ akinator/akinator.cpp tree/tree.cpp graphviz/graphviz.cpp main.cpp -o main
+all: main.o akinator.o tree.o stack.o graphviz.o
+	g++ akinator/akinator.cpp tree/tree.cpp stack/MyStack.cpp graphviz/graphviz.cpp main.cpp -o main
 
 main.o: main.cpp
 	g++ $(CFLAGS) main.cpp
@@ -17,6 +17,9 @@ akinator.o: akinator/akinator.cpp
 
 tree.o: tree/tree.cpp
 	g++ $(CFLAGS) tree/tree.cpp
+
+stack.o: stack/MyStack.cpp
+	g++ $(CFLAGS) stack/MyStack.cpp
 
 graphviz.o: graphviz/graphviz.cpp
 	g++ $(CFLAGS) graphviz/graphviz.cpp

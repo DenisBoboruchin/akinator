@@ -3,7 +3,7 @@
 #ifdef STR
     typedef const char* ElemType;
 
-    const char*     INITIAL     =     "fict";
+    const char*     INITIAL     =     "init";
     const char*     DESTROYED   =     "dest";
 #endif
 
@@ -20,6 +20,10 @@
     double          INITIAL     =     111111;
     double          DESTROYED   =      -7234;
 #endif
+
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 CTree::CTree () :
     treeRoot_ (nullptr),
@@ -45,6 +49,10 @@ void CTree::TreeDtor_ (struct item* node)
     delete[] node;
 }
 
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+
 int CTree::addItm (struct item* prefItm, ElemType data)
 {
     if (CheckEmpty_ (prefItm) == EMPTY)         //check tree on empty
@@ -54,33 +62,11 @@ int CTree::addItm (struct item* prefItm, ElemType data)
         return NOMISTAKE;
     }
                 
-    if ((prefItm->left) && (prefItm->right))
-    {
-        printf ("This item filled\n");
-
-        return MISTAKE;
-    }
-
     struct item* newItm = new item;
     
     newItm->data = data;
  
-    switch (Compare (data, prefItm->data))
-    {
-        case LEFT:
-            prefItm->left = newItm;
-            break;
-
-        case RIGHT:
-            prefItm->right = newItm;
-            break;
-
-        default:
-            printf ("ERROR!!! Compare error!\n");
-            return MISTAKE;
-    }
-    
-    return NOMISTAKE;
+    return CompareAndAddItm_ (prefItm, newItm);
 }
 
 int CTree::CheckEmpty_ (struct item* prefItm)
@@ -103,6 +89,42 @@ int CTree::CheckEmpty_ (struct item* prefItm)
 
     return NOMISTAKE;
 }
+
+int CTree::CompareAndAddItm_ (struct item* prefItm, struct item* newItm)
+{
+     switch (Compare (newItm->data, prefItm->data))
+    {
+        case LEFT:
+        {
+            if (prefItm->left)
+                printf ("This item filled\n");
+            else
+                prefItm->left = newItm;
+            
+            return NOMISTAKE;
+        }
+
+        case RIGHT:
+        {
+            if (prefItm->right)
+                printf ("This item filled\n");
+            else
+                prefItm->right = newItm;
+            
+            return NOMISTAKE;
+        }
+
+        default:
+        {
+            printf ("ERROR!!! Compare error!\n");
+            return MISTAKE;
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 int Compare (ElemType data, ElemType object)
 {
@@ -130,6 +152,10 @@ int Compare (ElemType data, ElemType object)
 
     return NOCOMP;
 }
+
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 struct item* CTree::findItm (ElemType data)
 {
@@ -162,12 +188,20 @@ struct item* CTree::findItm (ElemType data)
     return nullptr;
 }
 
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+
 int CTree::TreeOk_ ()
 {
     
 
     return NOMISTAKE;
 }
+
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 int CTree::graphDump ()
 {

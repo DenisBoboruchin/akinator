@@ -44,23 +44,23 @@ private:
 	struct item*    treeRoot_   =    nullptr; 
     int             size_       =          0;
 
-    int             TreeOk_     ();
-    int             CheckEmpty_ (struct item* prefItm);
-    void            TreeDtor_   (struct item* node);
-
+    int             TreeOk_             ();
+    int             CheckEmpty_         (struct item* prefItm);
+    void            TreeDtor_           (struct item* node);
+    int             CompareAndAddItm_   (struct item* prefI, struct item* newI);
 public:
-    explicit        CTree       ();
-                    ~CTree      ();
+    explicit        CTree               ();
+                    ~CTree              ();
 
-    int             addItm      (struct item* prefItm, ElemType data);
-    struct item*    findItm     (ElemType data);
+    int             addItm              (struct item* prefItm, ElemType data);
+    struct item*    findItm             (ElemType data);
 
-    int             graphDump   ();
+    int             graphDump           ();
 };
 
-int CtorElemsForDot (struct item* node);
-int CtorEdgeForDot  (struct item* node);
+int CtorElemsForDot             (struct item* node);
+int CtorEdgeForDot              (struct item* node);
 
-int Compare         (ElemType data, ElemType object);
+int Compare                     (ElemType data, ElemType object);
 
 #endif
