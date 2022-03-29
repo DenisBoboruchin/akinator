@@ -20,7 +20,7 @@ int main ()
     t1.addItm (t1.findItm ("Фачит?"), "P                ");
 
 
-    FILE* file = fopen ("treeListing.txt", "w");
+    FILE* file = fopen ("dump/treeListing.txt", "w");
 
     CtorTreeListing (file, t1.findItm ("Животное?"));
 
