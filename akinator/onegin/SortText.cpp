@@ -66,6 +66,12 @@ char* CreateBuf(int* sizeBuf, const char* origName)
         buffer = (char*) realloc(buffer, *sizeBuf);
     }
 
+    for (int i = 0; i < *sizeBuf; i++)
+    {
+        if (*(buffer + i) == '\n')
+            *(buffer + i) = '\0';
+    }
+
     return buffer;
 }
 /*
