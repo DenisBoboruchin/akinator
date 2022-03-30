@@ -9,17 +9,74 @@ CTree CtorTreeFromFile (const char* fileName)
 
     CTree tree;
     int index = 0;
+    struct item* node = nullptr;
 
-    CtorItmFromFile (tree, buffer, index, sizeBuf);
+
+    while ((index < sizeBuf) && (*(buffer + index) != '\0'))
+    {
+        if (*(buffer + index) == '{')
+            node = tree.addItm (nullptr, buffer + index + 1);
+        
+
+        if (*(buffer + index) == '}')
+            return tree; 
+
+        index++;
+    }
+    index++;
+
+    if (!node)
+    {
+        printf ("Empty tree\n");
+        return tree;
+    }
+
+    node->left  = CtorItmFromFile (tree, node, buffer, &index, sizeBuf);
+    node->right = CtorItmFromFile (tree, node, buffer, &index, sizeBuf);
 
     return tree;
 }
 
-int CtorItmFromFile (CTree tree, char* buffer, int index, int sizeBuf)
-{
-    
+item* CtorItmFromFile (CTree tree, item* node, char* buffer, int* index, int sizeBuf)
+{ 
+    assert (buffer);
+    assert (index);
+    assert (*index  >= 0);
+    assert (sizeBuf >= 0);
 
-    return NOMISTAKE;
+    item* newNode = nullptr;
+
+    while ((*index < sizeBuf) && (*(buffer + *index) != '\0'))
+    {
+        if ((*(buffer + *index) == '{'))
+        {
+            if (*(buffer + *index + 1) != '}')
+            {
+                newNode = new item;
+
+                newNode->data = buffer + *index + 1;
+            }
+        }
+
+        if (*(buffer + *index) == '}')
+        {
+            (*index)++;
+            return node; 
+        }
+
+        (*index)++;
+    }
+    (*index)++;
+
+    if (newNode)
+    {
+        newNode->left  = CtorItmFromFile (tree, newNode, buffer, index, sizeBuf);
+        newNode->right = CtorItmFromFile (tree, newNode, buffer, index, sizeBuf);
+    }
+
+    //CtorItmFromFile ()
+
+    return node;
 }
 
 int CtorTreeListing (FILE* file, struct item* root, int* count)
@@ -38,15 +95,25 @@ int CtorTreeListing (FILE* file, struct item* root, int* count)
     fprintf (file, "%s", root->data);
 
     if ((root->left) || (root->right))
+    {
         fprintf (file, "\n");
 
-    if (root->left)
-        CtorTreeListing (file, root->left, count);
+        if (root->left)
+        {   
+            CtorTreeListing (file, root->left, count);
 
-    if (root->right)
-        CtorTreeListing (file, root->right, count);
-    
-    
+            if (!(root->right))
+                fprintf (file, "%*s", *count * 4 + 3, "{}\n"); 
+        }
+        
+        if (root->right)
+        {
+            if (!(root->left))
+                fprintf (file, "%*s", *count * 4 + 3, "{}\n"); 
+            
+            CtorTreeListing (file, root->right, count);
+        }
+    } 
     
     if (!(root->left) && !(root->right))
         fprintf (file, "}\n");

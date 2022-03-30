@@ -15,9 +15,16 @@ const int           MISTAKE     =          1;
 const int           EMPTY       =       9234;
 const int           NOTFOUND    =       -583;
 
+enum addMode
+{
+    ADDLEFT     =    123,
+    ADDRIGHT            ,
+    STANDART
+};
+
 enum comp
 {
-    LEFT    =       3523,
+    LEFT        =   3523,
     RIGHT               ,
     EQUAL               ,
     NOCOMP
@@ -52,7 +59,7 @@ public:
     explicit        CTree               ();
                     ~CTree              ();
 
-    int             addItm              (struct item* prefItm, ElemType data);
+    struct item*    addItm              (struct item* prefItm, ElemType data, int mode = STANDART);
     struct item*    findItm             (ElemType data);
 
     int             graphDump           ();

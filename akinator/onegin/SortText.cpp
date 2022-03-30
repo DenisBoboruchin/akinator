@@ -57,7 +57,7 @@ char* CreateBuf(int* sizeBuf, const char* origName)
     FILE* text = fopen(origName, "r");
     assert (text != NULL);
 
-    size_t newSize = fread(buffer, sizeof(*buffer), *sizeBuf, text);
+    int newSize = (int) fread(buffer, sizeof(*buffer), *sizeBuf, text);
     assert (fclose(text) == 0);
 
     if (newSize < *sizeBuf)

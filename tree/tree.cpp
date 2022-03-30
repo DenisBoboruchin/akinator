@@ -53,20 +53,38 @@ void CTree::TreeDtor_ (struct item* node)
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 
-int CTree::addItm (struct item* prefItm, ElemType data)
+struct item* CTree::addItm (struct item* prefItm, ElemType data, int mode)
 {
     if (CheckEmpty_ (prefItm) == EMPTY)         //check tree on empty
     {
         treeRoot_->data = data;
 
-        return NOMISTAKE;
+        return treeRoot_;
     }
                 
     struct item* newItm = new item;
     
     newItm->data = data;
  
-    return CompareAndAddItm_ (prefItm, newItm);
+    switch (mode)
+    {
+        case STANDART:
+            CompareAndAddItm_ (prefItm, newItm);
+            break;
+
+        case ADDLEFT:
+            prefItm->left = newItm;
+            break;
+
+        case ADDRIGHT:
+            prefItm->right = newItm;
+            break;
+
+        default:
+            assert (!"ERROR!!! Unknown mode for CTree::addItm\n");
+    }
+
+    return newItm;
 }
 
 int CTree::CheckEmpty_ (struct item* prefItm)
@@ -83,6 +101,7 @@ int CTree::CheckEmpty_ (struct item* prefItm)
         else
         {
             printf ("ERROR!!! Tree is not empty\n");
+            printf ("ERROR!!! Expected not null pointer\n");
             assert (prefItm);
         }
     }
@@ -182,8 +201,9 @@ struct item* CTree::findItm (ElemType data)
         }
     }
 
+    printf ("\"");
     printf (ELEM_FMT, data);
-    printf (" not found\n");
+    printf ("\" not found\n");
 
     return nullptr;
 }
