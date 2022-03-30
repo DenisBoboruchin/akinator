@@ -70,6 +70,9 @@ char* CreateBuf(int* sizeBuf, const char* origName)
     {
         if (*(buffer + i) == '\n')
             *(buffer + i) = '\0';
+
+        if (*(buffer + i) == '{')
+            printf ("r\n");
     }
 
     return buffer;
