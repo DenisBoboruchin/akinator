@@ -4,7 +4,7 @@
 
 int main ()
 {
-    printf ("started\n");
+//    printf ("started\n");
 /*
     CTree t1;
 

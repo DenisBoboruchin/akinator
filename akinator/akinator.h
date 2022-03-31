@@ -10,6 +10,6 @@
 int     CtorTreeListing     (FILE* file, struct item* root, int* count = nullptr);
 
 CTree   CtorTreeFromFile    (const char* fileName);
-item*   CtorItmFromFile     (CTree tree, char* buffer, int* index, int sizeBuf);
+item*   CtorItmFromFile     (char* buffer, int* index, int sizeBuf);
 
 #endif

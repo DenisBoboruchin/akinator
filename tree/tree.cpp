@@ -58,7 +58,7 @@ struct item* CTree::addItm (struct item* prefItm, ElemType data, int mode)
     if (CheckEmpty_ (prefItm) == EMPTY)         //check tree on empty
     {
         treeRoot_->data = data;
-
+    
         return treeRoot_;
     }
                 
@@ -214,7 +214,7 @@ struct item* CTree::findItm (ElemType data)
 
 int CTree::TreeOk_ ()
 {
-    
+    printf ("%s\n", treeRoot_->data);
 
     return NOMISTAKE;
 }

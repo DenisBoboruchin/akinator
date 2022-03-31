@@ -15,9 +15,10 @@ CTree CtorTreeFromFile (const char* fileName)
     while ((index < sizeBuf) && (*(buffer + index) != '\0'))
     {
         if (*(buffer + index) == '{')
-        {
-            printf ("create: %d\n", index);
+        { 
             node = tree.addItm (nullptr, buffer + index + 1);
+            node->data = buffer + index + 1;
+            
         }
 
         if (*(buffer + index) == '}')
@@ -26,7 +27,6 @@ CTree CtorTreeFromFile (const char* fileName)
         index++;
     }
     index++;
-    printf ("%d\n", index);
 
     if (!node)
     {
@@ -34,34 +34,29 @@ CTree CtorTreeFromFile (const char* fileName)
         return tree;
     }
 
-    node->left  = CtorItmFromFile (tree, buffer, &index, sizeBuf);
-    printf ("ctorctorctor\n");
-    node->right = CtorItmFromFile (tree, buffer, &index, sizeBuf);
+    node->left  = CtorItmFromFile (buffer, &index, sizeBuf);
+    node->right = CtorItmFromFile (buffer, &index, sizeBuf);
+
+    free (buffer);
 
     return tree;
 }
 
-item* CtorItmFromFile (CTree tree, char* buffer, int* index, int sizeBuf)
+item* CtorItmFromFile (char* buffer, int* index, int sizeBuf)
 { 
-    printf ("sss\n");
     assert (buffer);
     assert (index);
     assert (*index  >= 0);
     assert (sizeBuf >= 0);
 
-    printf ("index = %d\n", *index);
     item* newNode = nullptr;
-    printf ("item create\n");
 
     while ((*index < sizeBuf) && (*(buffer + *index) != '\0'))
     {
-        printf ("начал\n");
         if ((*(buffer + *index) == '{'))
         {
-            printf ("нашееел\n");
             if (*(buffer + *index + 1) != '}')
             {
-                printf ("create \"%s\"\n", buffer + *index + 1);
                 newNode = new item;
 
                 newNode->data = buffer + *index + 1;
@@ -77,31 +72,22 @@ item* CtorItmFromFile (CTree tree, char* buffer, int* index, int sizeBuf)
         {
             *(buffer + *index) = '\0';
             *index += 2;
-            printf ("UUUUUUUUUUUUUUUUUUUUUUU\n");
-            return nullptr; 
+
+            return newNode; 
         }
         
         (*index)++;
-
-        printf ("%d\n", *index);
     }
     (*index)++;
 
     if (newNode)
     {
-        printf ("Меня вызвал %s\n", newNode->data);
-        newNode->left  = CtorItmFromFile (tree, buffer, index, sizeBuf);
-        
-        printf ("середина\n");
-
-        printf ("Меня вызвал %s\n", newNode->data);        
-        newNode->right = CtorItmFromFile (tree, buffer, index, sizeBuf);
+        newNode->left  = CtorItmFromFile (buffer, index, sizeBuf);       
+        newNode->right = CtorItmFromFile (buffer, index, sizeBuf);
     }
     
     while (*(buffer + *index) != '}')
-    {
         (*index)++;
-    }
     *index += 2;
 
     return newNode;

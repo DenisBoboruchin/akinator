@@ -17,10 +17,10 @@ void DotElemCtor (void* index, ElemType data, void* next, void* prev, const char
         const char* color, const char* label, const char* style)
 {
     fprintf (dotFile, "\t%s%p[shape=%s, ", label, index, shape); 
-    fprintf (dotFile, "label=\"{<adress> addres\\n%p|<data> data\\n", index);
+    fprintf (dotFile, "label=\"{<adress> addres\\n%p|<data> data\\n\\\"", index);
     fprintf (dotFile, ELEM_FMT, data);
     
-    fprintf (dotFile, "|{<left>left:%10p|<right>right:%10p}}\", ", next, prev);
+    fprintf (dotFile, "\\\"|{<left>left:%10p|<right>right:%10p}}\", ", next, prev);
     fprintf (dotFile, "fillcolor=\"%s\", style=%s];\n", color, style);
 }
 /*
