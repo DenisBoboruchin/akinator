@@ -68,7 +68,7 @@ char* CreateBuf(int* sizeBuf, const char* origName)
 
     for (int i = 0; i < *sizeBuf; i++)
     {
-        if (*(buffer + i) == '\n')
+        if ((*(buffer + i) == '\n') || (*(buffer + i) == '\r'))
             *(buffer + i) = '\0';
     }
 

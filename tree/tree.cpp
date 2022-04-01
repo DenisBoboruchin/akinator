@@ -26,8 +26,9 @@
 //-------------------------------------------------------------------------------------
 
 CTree::CTree () :
-    treeRoot_ (nullptr),
-    size_ (0) 
+    treeRoot_   (nullptr),
+    size_       (0),
+    buffer_     (nullptr) 
     {}
 
 CTree::~CTree ()
@@ -39,6 +40,12 @@ void CTree::TreeDtor_ (struct item* node)
 {
     if (node == nullptr)
         return ;
+
+    if (buffer_)
+    {
+        free (buffer_);
+        buffer_ = nullptr;
+    }
 
     if (node->left)
         TreeDtor_ (node->left);
@@ -181,9 +188,10 @@ struct item* CTree::findItm (ElemType data)
     struct item* item = treeRoot_; 
 
     while (item)
-    {
+    {  
+        //printf ("data: \"%s\"\n obj : \"%s\"\n\n", data, item->data);
         switch (Compare (data, item->data))
-        {
+        { 
             case LEFT:
                 item = item->left;
                 break;
@@ -206,6 +214,11 @@ struct item* CTree::findItm (ElemType data)
     printf ("\" not found\n");
 
     return nullptr;
+}
+
+void CTree::addBuffer (char* buffer)
+{
+    buffer_ = buffer;
 }
 
 //-------------------------------------------------------------------------------------

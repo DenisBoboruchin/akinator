@@ -19,12 +19,16 @@ int main ()
    
     t1.addItm (t1.findItm ("Ффффффачитт?"), "P                ");
 
+*/
+    //FILE* file = fopen ("dump/treeListing.txt", "w");
 
+   // CtorTreeListing (file, t1.findItm ("Животное?"));
+
+    CTree t1 = CtorTreeFromFile ("dump/treeListing.txt");
+ 
     FILE* file = fopen ("dump/treeListing.txt", "w");
 
-    CtorTreeListing (file, t1.findItm ("Животное?"));
-*/
-    CTree t1 = CtorTreeFromFile ("dump/treeListing.txt");
+    CtorTreeListing (file, t1.findItm ("Живот"));
 
     t1.graphDump ();
 

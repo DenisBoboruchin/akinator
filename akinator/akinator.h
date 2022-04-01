@@ -7,6 +7,9 @@
 #include "../tree/tree.h"
 #include "onegin/SortText.h"
 
+int     Akinator            ();
+char*   ScanAnswer          (char* str);
+
 int     CtorTreeListing     (FILE* file, struct item* root, int* count = nullptr);
 
 CTree   CtorTreeFromFile    (const char* fileName);

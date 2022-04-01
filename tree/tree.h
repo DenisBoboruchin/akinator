@@ -51,6 +51,8 @@ private:
 	struct item*    treeRoot_   =    nullptr; 
     int             size_       =          0;
 
+    char*           buffer_     =    nullptr;
+
     int             TreeOk_             ();
     int             CheckEmpty_         (struct item* prefItm);
     void            TreeDtor_           (struct item* node);
@@ -61,6 +63,8 @@ public:
 
     struct item*    addItm              (struct item* prefItm, ElemType data, int mode = STANDART);
     struct item*    findItm             (ElemType data);
+
+    void            addBuffer           (char* buffer);
 
     int             graphDump           ();
 };

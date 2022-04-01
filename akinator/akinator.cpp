@@ -1,5 +1,31 @@
 #include "akinator.h"
 
+int Akinator ()
+{
+    printf ("Загадайте что-нибудь, а я попробую отгадать\n");
+    printf ("Для ответов на мои вопросы используйте (y / n)\n");
+    printf ("Загадали?\n");
+
+    char* str = new char[20];
+
+    ScanAnswer (str);
+
+    return NOMISTAKE;
+}
+
+char* ScanAnswer (char* str)
+{
+    if ((scanf ("%s", str) != 1) || (getchar() != '\n'))
+    {
+        printf ("Ошибка ввода\n");
+        printf ("Попробуйте еще раз\n");
+
+        ScanAnswer (str);
+    }
+
+    return str;
+}
+
 CTree CtorTreeFromFile (const char* fileName)
 {
     assert (fileName); 
@@ -17,8 +43,8 @@ CTree CtorTreeFromFile (const char* fileName)
         if (*(buffer + index) == '{')
         { 
             node = tree.addItm (nullptr, buffer + index + 1);
-            node->data = buffer + index + 1;
-            
+
+            tree.addBuffer (buffer);            
         }
 
         if (*(buffer + index) == '}')
@@ -36,8 +62,6 @@ CTree CtorTreeFromFile (const char* fileName)
 
     node->left  = CtorItmFromFile (buffer, &index, sizeBuf);
     node->right = CtorItmFromFile (buffer, &index, sizeBuf);
-
-    free (buffer);
 
     return tree;
 }
