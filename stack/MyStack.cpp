@@ -4,6 +4,7 @@ FILE* logFile = fopen ("../dump/logFile.txt", "w");
 
 int StackCtor(Stack* stk)
 {
+    printf ("я создаю стек/n");
     stk->capacity = STARTSTACKCAPACITY;
 
     stk->data = (elem_type*) calloc(stk->capacity + 2 * SIZECANARY + 1, sizeof(elem_type));
@@ -17,6 +18,7 @@ int StackCtor(Stack* stk)
     stk->HASHSTACK = 41 * stk->size % 113 + 2 * (stk->capacity - 2) % 337 + /*3 * ((int) stk->data - 3) + */337;
 
     STACK_CHECK
+    printf ("я создал\n");
 
     return 0;
 }
@@ -46,12 +48,12 @@ int StackPush(Stack* stk, elem_type value)
 
     *(stk->data + stk->size) = value;
 
-    stk->HASHDATA += (37 * value) + 13 * stk->size % 7;
-    stk->HASHSTACK -= 41 * stk->size % 113;
+    //stk->HASHDATA += (37 * value) + 13 * stk->size % 7;
+    //stk->HASHSTACK -= 41 * stk->size % 113;
 
     (stk->size)++;
 
-    stk->HASHSTACK += 41 * stk->size % 113;
+    //stk->HASHSTACK += 41 * stk->size % 113;
 
     CheckSize(stk);
     STACK_CHECK
@@ -70,9 +72,9 @@ elem_type StackPop(Stack* stk)
     stk->HASHSTACK += 41 * stk->size % 113;
 
     elem_type temp = *(stk->data + stk->size);
-    *(stk->data + stk->size) = -1;
+    //*(stk->data + stk->size) = -1;
 
-    stk->HASHDATA -= ((37 * temp) + 13 * stk->size % 7);
+    //stk->HASHDATA -= ((37 * temp) + 13 * stk->size % 7);
 
     CheckSize(stk);
     STACK_CHECK
@@ -142,14 +144,14 @@ void MyRealloc(Stack* stk)
     stk->data = (elem_type*) realloc(stk->data - SIZECANARY, (stk->capacity + 2 * SIZECANARY + 1) * sizeof(elem_type));
     stk->data = stk->data + SIZECANARY;
 
-    for (int i = stk->size; i < stk->capacity; i++)
-        *(stk->data + i) = -1;
+    //for (int i = stk->size; i < stk->capacity; i++)
+      //  *(stk->data + i) = -1;
 }
 
 void CleanData(Stack* stk)
 {
     for (int i = 0; i < stk->capacity + 2 * SIZECANARY + 1; i++)
-        *(stk->data + i) = -1;
+        i++;//*(stk->data + i) = -1;
 }
 
 int StackCheck(const Stack* stk)
@@ -202,17 +204,17 @@ int GetKeyError(const Stack* stk)
     if (stk->RIGHTSTACKCANARY != 0xC0FFEE2)
         return INVALID_RIGHT_STACK_CANARY;
 
-    if ((stk->capacity != 0) && (*(unsigned long long int*) (stk->data - SIZECANARY) != LEFTCANARY))
-        return INVALID_LEFT_DATA_CANARY;
+    //if ((stk->capacity != 0) && (*(unsigned long long int*) (stk->data - SIZECANARY) != LEFTCANARY))
+      //  return INVALID_LEFT_DATA_CANARY;
 
-    if ((stk->capacity != 0) && (*(unsigned long long int*) (stk->data + stk->capacity) != RIGHTCANARY))
-        return INVALID_RIGHT_DATA_CANARY;
+    //if ((stk->capacity != 0) && (*(unsigned long long int*) (stk->data + stk->capacity) != RIGHTCANARY))
+        //return INVALID_RIGHT_DATA_CANARY;
 
-    if (CheckDataHash(stk) != stk->HASHDATA)
-        return INVALID_DATA_HASH;
+    //if (CheckDataHash(stk) != stk->HASHDATA)
+      //  return INVALID_DATA_HASH;
 
-    if (CheckStackHash(stk) != stk->HASHSTACK)
-        return INVALID_STACK_HASH;
+    //if (CheckStackHash(stk) != stk->HASHSTACK)
+      //  return INVALID_STACK_HASH;
 
     return STACK_OK;
 }
@@ -290,10 +292,11 @@ int StackDump(const Stack* stk, const char* text)
 
 long long int CheckDataHash(const Stack* stk)
 {
+    assert (stk);
     long long int tempHash = 0;
 
-    for (int i = 0; i < stk->size; i++)
-        tempHash += 37 * (*(stk->data + i)) + 13 * i % 7;
+    //for (int i = 0; i < stk->size; i++)
+        //tempHash += 37 * (*(stk->data + i)) + 13 * i % 7;
 
     return tempHash;
 }

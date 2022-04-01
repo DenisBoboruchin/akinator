@@ -135,8 +135,8 @@ int AddNewItm (item* node, char* str)
         {
             case YES:
             {
-                printf ("Обязательно добавлю, но пока не умею\n");   
-                
+                AddItmInTree (node, str, ability);
+
                 delete[] answer;
                 delete[] ability;
                 return NOMISTAKE;
@@ -170,11 +170,50 @@ int AddNewItm (item* node, char* str)
     }
 }
 
+int AddItmInTree (item* node, char* str, char* ability)
+{
+    assert (node);
+    
+    printf ("Обязательно добавлю, но пока не умею\n"); 
+    
+    item* abilItm = new item;
+    abilItm->data = ability;
+
+    item* nameItm = new item;
+    nameItm->data = str;
+
+    item* parent = node->parent;
+
+    if (!parent)
+    {
+        printf ("К сожвлению сюда добавить нельзя\n");
+        return NOMISTAKE;
+    }
+    else if (node == parent->left)
+        parent->left = abilItm;
+    else if (node == parent->right)
+        parent->right = abilItm;
+    else
+    {
+        printf ("Ошибка добавления\n");
+        return MISTAKE;
+    }
+
+    abilItm->right  = nameItm;
+    abilItm->left   = node;
+    node->parent    = abilItm;
+    nameItm->parent = abilItm;
+
+    printf ("Уже добавил\n");
+
+    return NOMISTAKE;
+}
+
 answer CheckAnswer (char* str)
 {
-    if      (!strcasecmp (str, "y")  || !strcasecmp (str, "yes") || !strcasecmp (str, "д")   ||
-             !strcasecmp (str, "да") || !strcasecmp (str, "Y")   || !strcasecmp (str, "Yes") || 
-             !strcasecmp (str, "Д")  || !strcasecmp (str, "Да")) 
+    if      (!strcasecmp (str, "y")   || !strcasecmp (str, "yes") || !strcasecmp (str, "д")   ||
+             !strcasecmp (str, "да")  || !strcasecmp (str, "Y")   || !strcasecmp (str, "Yes") || 
+             !strcasecmp (str, "Д")   || !strcasecmp (str, "Да")) 
         return YES;
     
     else if (!strcasecmp (str, "n")   || !strcasecmp (str, "no")  || !strcasecmp (str, "н")   ||
@@ -258,13 +297,13 @@ CTree CtorTreeFromFile (const char* fileName)
         return tree;
     }
 
-    node->left  = CtorItmFromFile (buffer, &index, sizeBuf);
-    node->right = CtorItmFromFile (buffer, &index, sizeBuf);
+    node->left  = CtorItmFromFile (node, buffer, &index, sizeBuf);
+    node->right = CtorItmFromFile (node, buffer, &index, sizeBuf);
 
     return tree;
 }
 
-item* CtorItmFromFile (char* buffer, int* index, int sizeBuf)
+item* CtorItmFromFile (item* node, char* buffer, int* index, int sizeBuf)
 { 
     assert (buffer);
     assert (index);
@@ -280,7 +319,8 @@ item* CtorItmFromFile (char* buffer, int* index, int sizeBuf)
             if (*(buffer + *index + 1) != '}')
             {
                 newNode = new item;
-
+                
+                newNode->parent = node;
                 newNode->data = buffer + *index + 1;
             }
             else
@@ -304,8 +344,8 @@ item* CtorItmFromFile (char* buffer, int* index, int sizeBuf)
 
     if (newNode)
     {
-        newNode->left  = CtorItmFromFile (buffer, index, sizeBuf);       
-        newNode->right = CtorItmFromFile (buffer, index, sizeBuf);
+        newNode->left  = CtorItmFromFile (newNode, buffer, index, sizeBuf);       
+        newNode->right = CtorItmFromFile (newNode, buffer, index, sizeBuf);
     }
     
     while (*(buffer + *index) != '}')

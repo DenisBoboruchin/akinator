@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include "../tree/tree.h"
 
 #define INFOCHECK __FILE__, __LINE__, __PRETTY_FUNCTION__
 
@@ -11,8 +12,8 @@
                       fprintf(logFile, "IN the program: %s\nIN the line: %d\nIN the function: %s\n", INFOCHECK);  \
                       StackCheck(stk);
 
-typedef int elem_type;
-#define ELEM_FMT "%d"
+typedef item* elem_type;
+#define ELEM_FMT "%p"
 
 struct Stack
 {
@@ -23,7 +24,7 @@ struct Stack
     long long int HASHSTACK = 0;
     long long int HASHDATA = 0;
 
-    elem_type* data;
+    elem_type* data = nullptr;
 
     unsigned long long int RIGHTSTACKCANARY = 0xC0FFEE2;
 };
@@ -82,5 +83,7 @@ void OutputData(const Stack* stk);
 void FprintfERROR(void);
 
 void Separator(FILE* logFile);
+
+//#undef ELEM_FMT
 
 #endif // MYSTACK

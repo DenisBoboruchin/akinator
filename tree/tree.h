@@ -33,13 +33,15 @@ enum comp
 //-------------------------------------------------------------------------
 //--------------------------TYPE_OF_THE_TREE-------------------------------
 //-------------------------------------------------------------------------
-
+//#define ELEM_FMT "%s"
 #define STR
 //typedef const char* ElemType;
                                                             
 struct item
 {
 	ElemType		data	    =	       0;
+
+    struct item*    parent      =    nullptr;
 
     struct item*	left	    =	 nullptr;
     struct item*    right       =    nullptr;
@@ -73,5 +75,7 @@ int CtorElemsForDot             (struct item* node);
 int CtorEdgeForDot              (struct item* node);
 
 int Compare                     (ElemType data, ElemType object);
+
+//#undef ELEM_FMT
 
 #endif

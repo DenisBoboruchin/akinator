@@ -210,7 +210,7 @@ struct item* CTree::findItm (ElemType data)
     }
 
     printf ("\"");
-    printf (ELEM_FMT, data);
+    printf ("%s", data);
     printf ("\" not found\n");
 
     return nullptr;

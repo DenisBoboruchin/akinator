@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 typedef const char* ElemType;
-#define ELEM_FMT "%s"
+#define ELEM_FMTS "%s"
 
 void    DotCtor         (const char* rankdir = "LR", const char *color = "darkkhaki");
 
