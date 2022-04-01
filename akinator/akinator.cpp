@@ -1,21 +1,194 @@
 #include "akinator.h"
 
-int Akinator ()
+int Akinator (item* node)
 {
     printf ("Загадайте что-нибудь, а я попробую отгадать\n");
     printf ("Для ответов на мои вопросы используйте (y / n)\n");
     printf ("Загадали?\n");
 
-    char* str = new char[20];
+    char* str = new char[MAXANSWSIZE];
 
+    int STARTFLAG = 0;
+
+    while (true)                        //пока не начнем игру
+    {  
+        ScanAnswer (str);
+
+        switch (CheckAnswer (str))
+        {
+            case YES:
+            {
+                printf ("Давайте начнём\n");
+                
+                STARTFLAG = 1;
+                break;
+            }
+
+            case NO:
+            {
+                printf ("Хорошо, давайте в другой раз...\n");
+                
+                delete[] str;
+                return NOMISTAKE;
+            }
+
+            case NOTANSW:
+            {
+                printf ("Это не ответ\n");
+                printf ("Попробуйте еще раз\n");
+                
+                break;
+            }
+
+            default:
+            {
+                printf ("ERROR!!!\n");
+                
+                return MISTAKE;
+            }
+        }  
+
+        if (STARTFLAG)
+            break;
+    }
+
+    AkinatorStartGame (node, str);
+
+    delete[] str;           
+  
+    return NOMISTAKE;
+}
+
+int AkinatorStartGame (item* node, char* str)
+{
+    printf ("Это %s?\n", node->data);
+
+    while (true)
+    {  
+        ScanAnswer (str);
+
+        switch (CheckAnswer (str))
+        {
+            case YES:
+            {   
+                if (node->right) 
+                    return AkinatorStartGame (node->right, str);           
+                    
+                else
+                {
+                    printf ("Ура!!!\nЯ угадал\n");
+                    return NOMISTAKE;
+                }
+            }    
+
+            case NO:
+            {
+                if (node->left) 
+                    return AkinatorStartGame (node->left, str);   
+
+                else
+                {
+                    printf ("Ехххх, не получилось...\n");
+                    printf ("Расскажите, что это?\n");
+                    AddNewItm (node, str);
+
+                    return NOMISTAKE;   
+                }     
+            }        
+
+            case NOTANSW:
+            {
+                printf ("Это не ответ\n");
+                printf ("Попробуйте еще раз\n");
+                
+                break;
+            }
+
+            default:
+            {
+                printf ("ERROR!!!\n");
+                
+                return MISTAKE;
+            }
+        }  
+    }
+}
+
+int AddNewItm (item* node, char* str)
+{
     ScanAnswer (str);
 
-    return NOMISTAKE;
+    printf ("Чем %s отличается от %s? Он..\n", str, node->data);
+
+    char* ability = new char[MAXANSWSIZE];
+    ScanAnswer (ability);
+
+    printf ("Хотите добавить %s в игру?\n", str);
+
+    char* answer = new char[MAXANSWSIZE];
+   
+    while (true)
+    {  
+        ScanAnswer (str);
+
+        switch (CheckAnswer (str))
+        {
+            case YES:
+            {
+                printf ("Обязательно добавлю, но пока не умею\n");   
+                
+                delete[] answer;
+                delete[] ability;
+                return NOMISTAKE;
+            }    
+
+            case NO:
+            {
+                printf ("Хорошо. Спасибо за игру!\n");
+                printf ("До встречи\n");
+
+                delete[] answer;
+                delete[] ability;
+                return NOMISTAKE;
+            }        
+
+            case NOTANSW:
+            {
+                printf ("Это не ответ\n");
+                printf ("Попробуйте еще раз\n");
+                
+                break;
+            }
+
+            default:
+            {
+                printf ("ERROR!!!\n");
+                
+                assert (!"ERROR!!!");
+            }
+        }  
+    }
+}
+
+answer CheckAnswer (char* str)
+{
+    if      (!strcasecmp (str, "y")  || !strcasecmp (str, "yes") || !strcasecmp (str, "д")   ||
+             !strcasecmp (str, "да") || !strcasecmp (str, "Y")   || !strcasecmp (str, "Yes") || 
+             !strcasecmp (str, "Д")  || !strcasecmp (str, "Да")) 
+        return YES;
+    
+    else if (!strcasecmp (str, "n")   || !strcasecmp (str, "no")  || !strcasecmp (str, "н")   ||
+             !strcasecmp (str, "нет") || !strcasecmp (str, "N")   || !strcasecmp (str, "No") || 
+             !strcasecmp (str, "Н")   || !strcasecmp (str, "Нет")) 
+        return NO;
+    
+    else
+        return NOTANSW;
 }
 
 char* ScanAnswer (char* str)
 {
-    if ((scanf ("%s", str) != 1) || (getchar() != '\n'))
+    if (!fgets (str, MAXANSWSIZE, stdin))
     {
         printf ("Ошибка ввода\n");
         printf ("Попробуйте еще раз\n");
@@ -23,7 +196,32 @@ char* ScanAnswer (char* str)
         ScanAnswer (str);
     }
 
+    char* pos = strchr (str, '\n');
+
+    if (!pos)
+    {
+        printf ("Ошибка ввода\n");
+        printf ("Слишком длинный ответ\n");
+        printf ("Попробуйте еще раз\n");
+        
+        CleanBuf ();
+        
+        ScanAnswer (str);
+    }
+    else
+        *pos = '\0';
+
     return str;
+}
+
+void CleanBuf ()
+{
+    int symb = 0;
+
+    symb = getchar ();
+
+    while (symb != '\n')
+        symb = getchar ();
 }
 
 CTree CtorTreeFromFile (const char* fileName)

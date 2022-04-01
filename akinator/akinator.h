@@ -3,16 +3,31 @@
 
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 #include "../tree/tree.h"
 #include "onegin/SortText.h"
 
-int     Akinator            ();
-char*   ScanAnswer          (char* str);
+enum answer
+{
+    YES     =   1,
+    NO           ,
+    NOTANSW
+};
 
-int     CtorTreeListing     (FILE* file, struct item* root, int* count = nullptr);
+const int   MAXANSWSIZE         =         20;
 
-CTree   CtorTreeFromFile    (const char* fileName);
-item*   CtorItmFromFile     (char* buffer, int* index, int sizeBuf);
+int         Akinator            (item* node);
+int         AkinatorStartGame   (item* node, char* str);
+int         AddNewItm           (item* node, char* str);
+
+char*       ScanAnswer          (char* str);
+answer      CheckAnswer         (char* str);
+void        CleanBuf            ();
+
+int         CtorTreeListing     (FILE* file, struct item* root, int* count = nullptr);
+
+CTree       CtorTreeFromFile    (const char* fileName);
+item*       CtorItmFromFile     (char* buffer, int* index, int sizeBuf);
 
 #endif

@@ -25,7 +25,9 @@ int main ()
    // CtorTreeListing (file, t1.findItm ("Животное?"));
 
     CTree t1 = CtorTreeFromFile ("dump/treeListing.txt");
- 
+
+    Akinator (t1.findItm ("Живот"));
+
     FILE* file = fopen ("dump/treeListing.txt", "w");
 
     CtorTreeListing (file, t1.findItm ("Живот"));
