@@ -7,7 +7,20 @@ int Akinator (item* node)
     printf ("Загадали?\n");
 
     char* str = new char[MAXANSWSIZE];
+    
+    int gameStatus = WhileForTheGame (node, str);
 
+    while (gameStatus != ENDGAME)
+    {
+        printf ("Хотите сыграть ещё раз?\n");
+        gameStatus = WhileForTheGame (node, str);
+    }
+     
+    return NOMISTAKE;
+}
+
+int WhileForTheGame (item* node, char* str)
+{
     int STARTFLAG = 0;
 
     while (true)                        //пока не начнем игру
@@ -30,7 +43,7 @@ int Akinator (item* node)
                 printf ("До встречи!\n");
 
                 delete[] str;
-                return NOMISTAKE;
+                return ENDGAME;
             }
 
             case NOTANSW:
@@ -45,7 +58,7 @@ int Akinator (item* node)
             {
                 printf ("ERROR!!!\n");
                 
-                return MISTAKE;
+                assert (!"ERROR GAME START");
             }
         }  
 
@@ -53,11 +66,7 @@ int Akinator (item* node)
             break;
     }
 
-    AkinatorStartGame (node, str);
-
-    //delete[] str;           
-  
-    return NOMISTAKE;
+    return AkinatorStartGame (node, str);
 }
 
 int AkinatorStartGame (item* node, char* str)
