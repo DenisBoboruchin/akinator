@@ -27,7 +27,8 @@ int Akinator (item* node)
             case NO:
             {
                 printf ("Хорошо, давайте в другой раз...\n");
-                
+                printf ("До встречи!\n");
+
                 delete[] str;
                 return NOMISTAKE;
             }
@@ -54,7 +55,7 @@ int Akinator (item* node)
 
     AkinatorStartGame (node, str);
 
-    delete[] str;           
+    //delete[] str;           
   
     return NOMISTAKE;
 }
@@ -122,6 +123,7 @@ int AddNewItm (item* node, char* str)
 
     char* ability = new char[MAXANSWSIZE];
     ScanAnswer (ability);
+    printf ("ability: %s\n", ability);
 
     printf ("Хотите добавить %s в игру?\n", str);
 
@@ -129,26 +131,23 @@ int AddNewItm (item* node, char* str)
    
     while (true)
     {  
-        ScanAnswer (str);
+        ScanAnswer (answer);
 
-        switch (CheckAnswer (str))
+        switch (CheckAnswer (answer))
         {
             case YES:
             {
                 AddItmInTree (node, str, ability);
 
                 delete[] answer;
-                delete[] ability;
                 return NOMISTAKE;
             }    
 
             case NO:
             {
                 printf ("Хорошо. Спасибо за игру!\n");
-                printf ("До встречи\n");
 
                 delete[] answer;
-                delete[] ability;
                 return NOMISTAKE;
             }        
 
@@ -172,9 +171,7 @@ int AddNewItm (item* node, char* str)
 
 int AddItmInTree (item* node, char* str, char* ability)
 {
-    assert (node);
-    
-    printf ("Обязательно добавлю, но пока не умею\n"); 
+    assert (node);   
     
     item* abilItm = new item;
     abilItm->data = ability;
@@ -186,7 +183,7 @@ int AddItmInTree (item* node, char* str, char* ability)
 
     if (!parent)
     {
-        printf ("К сожвлению сюда добавить нельзя\n");
+        printf ("К сожалению сюда добавить нельзя\n");
         return NOMISTAKE;
     }
     else if (node == parent->left)
@@ -204,7 +201,7 @@ int AddItmInTree (item* node, char* str, char* ability)
     node->parent    = abilItm;
     nameItm->parent = abilItm;
 
-    printf ("Уже добавил\n");
+    printf ("Уже добавил! Спасибо за игру!\n");
 
     return NOMISTAKE;
 }
@@ -280,7 +277,7 @@ CTree CtorTreeFromFile (const char* fileName)
         if (*(buffer + index) == '{')
         { 
             node = tree.addItm (nullptr, buffer + index + 1);
-
+            node->data = buffer + index + 1;
             tree.addBuffer (buffer);            
         }
 

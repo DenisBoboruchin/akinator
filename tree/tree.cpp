@@ -33,6 +33,7 @@ CTree::CTree () :
 
 CTree::~CTree ()
 {
+    printf ("Вызван деструктор\n");
     TreeDtor_ (treeRoot_);
 }
 
@@ -65,7 +66,7 @@ struct item* CTree::addItm (struct item* prefItm, ElemType data, int mode)
     if (CheckEmpty_ (prefItm) == EMPTY)         //check tree on empty
     {
         treeRoot_->data = data;
-    
+         
         return treeRoot_;
     }
                 
@@ -151,6 +152,11 @@ int CTree::CompareAndAddItm_ (struct item* prefItm, struct item* newItm)
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
+
+item* CTree::root ()
+{
+    return treeRoot_;
+}
 
 int Compare (ElemType data, ElemType object)
 {

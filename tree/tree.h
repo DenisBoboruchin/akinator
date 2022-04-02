@@ -68,6 +68,7 @@ public:
 
     void            addBuffer           (char* buffer);
 
+    item*           root                ();
     int             graphDump           ();
 };
 

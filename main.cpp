@@ -26,11 +26,13 @@ int main ()
 
     CTree t1 = CtorTreeFromFile ("dump/treeListing.txt");
 
-    Akinator (t1.findItm ("Живот"));
+    //t1.graphDump ();
+
+    Akinator (t1.root ());
 
     FILE* file = fopen ("dump/treeListing.txt", "w");
 
-    CtorTreeListing (file, t1.findItm ("Живот"));
+    CtorTreeListing (file, t1.root ());
 
     t1.graphDump ();
 

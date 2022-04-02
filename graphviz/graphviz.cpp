@@ -4,6 +4,8 @@ static FILE* dotFile = fopen ("dump/dot.dot", "w");
 
 void DotCtor (const char* rankdir, const char* color)
 {
+    //FILE* dotFile = fopen ("dump/dot.dot", "w");
+    
     fprintf (dotFile, "digraph\n{\n");
     
     fprintf (dotFile, "\trankdir=%s;\n", rankdir);
