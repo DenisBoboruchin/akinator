@@ -64,14 +64,14 @@ private:
 	struct item*    treeRoot_   =    nullptr; 
     int             size_       =          0;
 
-    struct buf      buff        =         {};
-   // char*           buffer_     =    nullptr;
-
     int             TreeOk_             ();
     int             CheckEmpty_         (struct item* prefItm);
     void            TreeDtor_           (struct item* node);
     int             CompareAndAddItm_   (struct item* prefI, struct item* newI);
+
 public:
+    struct buf      buff        =         {};
+    
     explicit        CTree               ();
                     ~CTree              ();
 

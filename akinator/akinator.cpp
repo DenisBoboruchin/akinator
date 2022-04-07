@@ -380,6 +380,7 @@ int CtorTreeListing (FILE* file, struct item* root, int* count)
     fprintf (file, "%*s", *count * 4 + 1, "{");
     (*count)++;
     fprintf (file, "%s", root->data);
+    //printf ("%s\n", root->data);
 
     if ((root->left) || (root->right))
     {

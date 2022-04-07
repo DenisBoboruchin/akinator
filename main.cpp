@@ -34,6 +34,8 @@ int main ()
 
     CtorTreeListing (file, t1.root ());
 
+    fclose (file);
+
     t1.graphDump ();
 
     return 0;
