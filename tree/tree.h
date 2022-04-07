@@ -15,6 +15,10 @@ const int           MISTAKE     =          1;
 const int           EMPTY       =       9234;
 const int           NOTFOUND    =       -583;
 
+const int           STARTNUM    =          7;
+
+const int           MAXANSWSIZE =         30;
+
 enum addMode
 {
     ADDLEFT     =    123,
@@ -47,13 +51,21 @@ struct item
     struct item*    right       =    nullptr;
 };
 
+struct buf
+{
+    char*           buffer_     =    nullptr;
+    char*           buffForNew  =    nullptr;
+    int             counter     =          0;
+};
+
 class CTree
 {
 private:
 	struct item*    treeRoot_   =    nullptr; 
     int             size_       =          0;
 
-    char*           buffer_     =    nullptr;
+    struct buf      buff        =         {};
+   // char*           buffer_     =    nullptr;
 
     int             TreeOk_             ();
     int             CheckEmpty_         (struct item* prefItm);

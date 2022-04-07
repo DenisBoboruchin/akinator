@@ -27,8 +27,7 @@
 
 CTree::CTree () :
     treeRoot_   (nullptr),
-    size_       (0),
-    buffer_     (nullptr) 
+    size_       (0) 
     {}
 
 CTree::~CTree ()
@@ -42,10 +41,10 @@ void CTree::TreeDtor_ (struct item* node)
     if (node == nullptr)
         return ;
 
-    if (buffer_)
+    if (buff.buffer_)
     {
-        free (buffer_);
-        buffer_ = nullptr;
+        free (buff.buffer_);
+        buff.buffer_ = nullptr;
     }
 
     if (node->left)
@@ -224,7 +223,8 @@ struct item* CTree::findItm (ElemType data)
 
 void CTree::addBuffer (char* buffer)
 {
-    buffer_ = buffer;
+    buff.buffer_ = buffer;
+    buff.buffForNew = (char*) calloc (STARTNUM, MAXANSWSIZE); 
 }
 
 //-------------------------------------------------------------------------------------

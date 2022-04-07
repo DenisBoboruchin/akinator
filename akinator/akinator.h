@@ -18,12 +18,12 @@ enum answer
 
 const int   ENDGAME             =       5934;
 
-const int   MAXANSWSIZE         =         20;
+extern const int   MAXANSWSIZE;
 
 int         Akinator            (item* node);
 int         WhileForTheGame     (item* node, char* str);
 int         AkinatorStartGame   (item* node, char* str);
-int         AddNewItm           (item* node, char* str);
+int         AddNewItm           (item* node);
 int         AddItmInTree        (item* node, char* str, char* ability);
 
 char*       ScanAnswer          (char* str);

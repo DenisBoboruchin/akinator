@@ -100,7 +100,7 @@ int AkinatorStartGame (item* node, char* str)
                 {
                     printf ("Ехххх, не получилось...\n");
                     printf ("Расскажите, что это?\n");
-                    AddNewItm (node, str);
+                    AddNewItm (node);
 
                     return NOMISTAKE;   
                 }     
@@ -124,17 +124,20 @@ int AkinatorStartGame (item* node, char* str)
     }
 }
 
-int AddNewItm (item* node, char* str)
+int AddNewItm (item* node)
 {
-    ScanAnswer (str);
+    char* name = new char[MAXANSWSIZE];
+    printf ("%p\n", name);
+    ScanAnswer (name);
 
-    printf ("Чем %s отличается от %s? Он..\n", str, node->data);
+    printf ("Чем %s отличается от %s? Он..\n", name, node->data);
 
     char* ability = new char[MAXANSWSIZE];
     ScanAnswer (ability);
+    
     printf ("ability: %s\n", ability);
 
-    printf ("Хотите добавить %s в игру?\n", str);
+    printf ("Хотите добавить %s в игру?\n", name);
 
     char* answer = new char[MAXANSWSIZE];
    
@@ -146,7 +149,7 @@ int AddNewItm (item* node, char* str)
         {
             case YES:
             {
-                AddItmInTree (node, str, ability);
+                AddItmInTree (node, name, ability);
 
                 delete[] answer;
                 return NOMISTAKE;
@@ -156,6 +159,8 @@ int AddNewItm (item* node, char* str)
             {
                 printf ("Хорошо. Спасибо за игру!\n");
 
+                delete[] name;
+                delete[] ability;
                 delete[] answer;
                 return NOMISTAKE;
             }        
