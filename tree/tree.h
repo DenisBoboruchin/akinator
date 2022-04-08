@@ -17,7 +17,7 @@ const int           NOTFOUND    =       -583;
 
 const int           STARTNUM    =          7;
 
-const int           MAXANSWSIZE =         30;
+const int           MAXANSWSIZE =         50;
 
 enum addMode
 {

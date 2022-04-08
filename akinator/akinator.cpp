@@ -48,7 +48,7 @@ int WhileForTheGame (item* node, char* str)
 
             case NOTANSW:
             {
-                printf ("Это не ответ\n");
+                printf ("\"%s\" это не ответ\n", str);
                 printf ("Попробуйте еще раз\n");
                 
                 break;
@@ -108,7 +108,7 @@ int AkinatorStartGame (item* node, char* str)
 
             case NOTANSW:
             {
-                printf ("Это не ответ\n");
+                printf ("\"%s\" это не ответ\n", str);
                 printf ("Попробуйте еще раз\n");
                 
                 break;
@@ -167,7 +167,7 @@ int AddNewItm (item* node)
 
             case NOTANSW:
             {
-                printf ("Это не ответ\n");
+                printf ("\"%s\" это не ответ\n", answer);
                 printf ("Попробуйте еще раз\n");
                 
                 break;
@@ -238,6 +238,37 @@ answer CheckAnswer (char* str)
 
 char* ScanAnswer (char* str)
 {
+    int symb = getchar ();
+    int len  = 0;
+
+    while ((symb != '\n'))
+    {
+        if (symb == '\b')
+        {
+            len--;
+            symb = getchar ();
+
+            continue;
+        }
+
+        *(str + len) = (char) symb;
+        printf ("\"%c\"\n", (char) symb);
+        len++;
+        symb = getchar ();
+    }
+
+    if (len == MAXANSWSIZE - 1)
+    {
+        printf ("Ошибка ввода\n");
+        printf ("Попробуйте еще раз\n");
+        
+        CleanBuf ();
+        ScanAnswer (str);
+    }
+
+    str[len] = '\0';
+    CleanBuf ();
+/*
     if (!fgets (str, MAXANSWSIZE, stdin))
     {
         printf ("Ошибка ввода\n");
@@ -260,6 +291,7 @@ char* ScanAnswer (char* str)
     }
     else
         *pos = '\0';
+*/
 
     return str;
 }
