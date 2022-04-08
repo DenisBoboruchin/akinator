@@ -2,7 +2,7 @@
 
 int Akinator (item* node)
 {
-    printf ("Загадайте что-нибудь, а я попробую отгадать\n");
+    printf ("Загадайте вид растения, а я попробую отгадать\n");
     printf ("Для ответов на мои вопросы используйте (y / n)\n");
     printf ("Загадали?\n");
 
@@ -127,7 +127,7 @@ int AkinatorStartGame (item* node, char* str)
 int AddNewItm (item* node)
 {
     char* name = new char[MAXANSWSIZE];
-    printf ("%p\n", name);
+    
     ScanAnswer (name);
 
     printf ("Чем %s отличается от %s? Он..\n", name, node->data);
@@ -238,36 +238,37 @@ answer CheckAnswer (char* str)
 
 char* ScanAnswer (char* str)
 {
-    int symb = getchar ();
+    int symb = getc (stdin);
     int len  = 0;
 
-    while ((symb != '\n'))
+    while ((symb != '\n') && (len < MAXANSWSIZE - 1))
     {
         if (symb == '\b')
         {
+            printf ("забил..\n");
             len--;
-            symb = getchar ();
+            symb = getc (stdin);
 
             continue;
         }
 
         *(str + len) = (char) symb;
-        printf ("\"%c\"\n", (char) symb);
         len++;
-        symb = getchar ();
+        symb = getc (stdin);
     }
 
     if (len == MAXANSWSIZE - 1)
     {
+        CleanBuf ();
         printf ("Ошибка ввода\n");
         printf ("Попробуйте еще раз\n");
         
-        CleanBuf ();
         ScanAnswer (str);
     }
 
     str[len] = '\0';
-    CleanBuf ();
+    //printf ("считал: %s\n", str);
+    
 /*
     if (!fgets (str, MAXANSWSIZE, stdin))
     {
@@ -292,7 +293,6 @@ char* ScanAnswer (char* str)
     else
         *pos = '\0';
 */
-
     return str;
 }
 

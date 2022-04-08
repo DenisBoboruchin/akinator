@@ -75,6 +75,8 @@ public:
     explicit        CTree               ();
                     ~CTree              ();
 
+                    CTree               (const CTree& obj);
+
     struct item*    addItm              (struct item* prefItm, ElemType data, int mode = STANDART);
     struct item*    findItm             (ElemType data);
 

@@ -7,7 +7,7 @@ CFLAGS = -c -Wall -Wextra -Werror -Walloc-zero -Walloca -Walloca-larger-than=819
             -Wno-missing-field-initializers -Wnarrowing -Wvarargs -fcheck-new -fstrict-overflow -flto-odr-type-merging 	
 
 all: main.o akinator.o onegin.o tree.o stack.o graphviz.o
-	g++ akinator/akinator.cpp tree/tree.cpp stack/MyStack.cpp akinator/onegin/SortText.cpp graphviz/graphviz.cpp main.cpp -o main
+	g++ akinator/akinator.cpp tree/tree.cpp stack/MyStack.cpp akinator/onegin/SortText.cpp graphviz/graphviz.cpp main.cpp -o start
 
 main.o: main.cpp
 	g++ $(CFLAGS) main.cpp
